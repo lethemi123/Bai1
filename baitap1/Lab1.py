@@ -1,30 +1,34 @@
 
-        
-
-class words:
+class Words:
     def __init__(self,vocabulary,meaning):
         self.vocabulary = vocabulary
         self.meaning = meaning
-class dictionary:
+class Dictionary:
     def __init__(self) -> None:
         self.dictionary ={}
     def add_word(self,vocabulary,meaning):
         if vocabulary in self.dictionary:
             print(f"this {vocabulary} has been in dictionary")
         else:
-            self.dictionary[vocabulary] = words(vocabulary,meaning)
-    def edit_word(self,old_word, new_word,new_meaning):
-        if old_word in self.dictionary:
-            del self.dictionary[old_word]
-            self.dictionary[new_word,new_meaning] = words(new_word,new_meaning)
-            print( f"Have edit done{old_word} to {new_word} and{new_meaning}")
-        else:
-            print(f"this {old_word} not in dictionary")
+            self.dictionary[vocabulary] = Words(vocabulary,meaning)
+    def edit_word(self,old_word):
+        while True:
+            if old_word in self.dictionary:
+                new_meaning = input("Input new meaning: ")
+                self.dictionary[old_word].meaning = new_meaning
+                print(f"This {old_word} is {new_meaning}")
+            else:
+                print(f"This {old_word} not in dictionary")
+            break
     def search_word(self,vocabulary):
-        if vocabulary in self.dictionary:
-            print (f"{vocabulary}: {self.dictionary[vocabulary].meaning}")
-        else:
-            print (f"this {vocabulary} not in dictionary")
+        query = vocabulary.lower()
+        found = False
+        for word in self.dictionary.values():
+            if query in word.vocabulary.lower():
+                print(f"{word.vocabulary}:{word.meaning}")
+                found = True
+            if not found:
+                print(f"{query} not in dictionary")
     def list_words(self):
        for word in self.dictionary.values():
             print(f"{word.vocabulary}: {word.meaning}")
@@ -36,9 +40,9 @@ class dictionary:
         else:
             print( f"this {vocabulary} not in dictionary")
 
-class app:
+class App:
     def __init__(self) -> None:
-        self.dictionary = dictionary()
+        self.dictionary = Dictionary()
     def menu(self): 
         while True:     
             print("1 Search word")
@@ -56,10 +60,8 @@ class app:
                 meaning = input("New meaning: ")
                 self.dictionary.add_word(word,meaning)
             if choice == '3':
-                old_word = input("Input word you want edit in dictionary: ")
-                new_word = input("Input Word: ")
-                new_meaning = input("Input meaning: ")
-                self.dictionary.edit_word(old_word,new_word,new_meaning)
+                word = input("Input your word you want to edit: ")
+                self.dictionary.edit_word(word)
             if choice == '4':
                 delete_word = input("Input word you want delete: ")
                 self.dictionary.delete_word(delete_word)
@@ -67,9 +69,4 @@ class app:
                 self.dictionary.list_words()
             if choice == '6':
                 break
-if __name__ == "__main__":
-    S = app()
-    S.menu()
-#comment
-def __str__(self):
-    return f"{self.name()}"
+App().menu()
