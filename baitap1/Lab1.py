@@ -12,14 +12,13 @@ class Dictionary:
         else:
             self.dictionary[vocabulary] = Words(vocabulary,meaning)
     def edit_word(self,old_word):
-        while True:
             if old_word in self.dictionary:
                 new_meaning = input("Input new meaning: ")
                 self.dictionary[old_word].meaning = new_meaning
                 print(f"This {old_word} is {new_meaning}")
             else:
                 print(f"This {old_word} not in dictionary")
-            break
+           
     def search_word(self,vocabulary):
         query = vocabulary.lower()
         found = False
@@ -27,8 +26,8 @@ class Dictionary:
             if query in word.vocabulary.lower():
                 print(f"{word.vocabulary}:{word.meaning}")
                 found = True
-            if not found:
-                print(f"{query} not in dictionary")
+        if not found:
+            print(f"{query} not in dictionary")
     def list_words(self):
        for word in self.dictionary.values():
             print(f"{word.vocabulary}: {word.meaning}")
@@ -57,13 +56,21 @@ class App:
                 self.dictionary.search_word(search_word)
             if choice == '2':
                 word = input("New word: ")
+                if word =="":
+                    return "Word is empty"
                 meaning = input("New meaning: ")
+                if meaning =="":
+                    return "Meaning is empty"
                 self.dictionary.add_word(word,meaning)
             if choice == '3':
                 word = input("Input your word you want to edit: ")
+                if word =="":
+                    return "Word is empty"
                 self.dictionary.edit_word(word)
             if choice == '4':
                 delete_word = input("Input word you want delete: ")
+                if delete_word =="":
+                    return "Word is empty"
                 self.dictionary.delete_word(delete_word)
             if choice == '5':
                 self.dictionary.list_words()
